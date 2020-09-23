@@ -1,0 +1,8 @@
+from datetime import datetime
+
+def year(y):
+	return datetime(year=y, month=1, day=1)
+
+bins = list(range(1959, 2030, 10))
+
+bins = [year(b) for b in bins]
