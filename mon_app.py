@@ -14,33 +14,46 @@ import sklearn
 from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 
-#### READING DATASET ####
-indianFood = pd.read_csv("indian_food.csv")
+#### DATASET ####
 food = pd.read_csv("Food_Preference.csv")
+foodName = 'Food preferences'
+indianFood = pd.read_csv("indian_food.csv")
+indianFoodName = 'Indian food'
+# We put the names in variables because we'll use it more than once.
+
+#### TITLE ####
+st.title('My python web app')
+
+#### SELECT BOX ####
+option = st.selectbox('Please, select a dataset',(foodName, indianFoodName))
+st.write('You selected:', option)
+
+#### USER INPUT ####
+user_input = st.text_input("How many lines do you want to check in the dataset?", 5)
 
 #### DISPLAYING DATA ####
-st.title('Mon app en python')
-st.header('Food preferences')
-st.subheader('Dataset')
-st.write(food.head(2)) #or st.table
-st.subheader('Colonnes')
-st.write(food.columns)
-st.subheader('Type des colonnes')
-st.write(food.dtypes)
-st.subheader('Shape')
-st.write(food.shape)
-st.subheader('Info')
-st.write(food.info())
-#
-st.header('Indian food')
-st.subheader('Dataset')
-st.write(indianFood.head(2)) #or st.table
-st.subheader('Colonnes')
-st.write(indianFood.columns)
-st.subheader('Type des colonnes')
-st.write(indianFood.dtypes)
-st.subheader('Shape')
-st.write(indianFood.shape)
-st.subheader('Info')
-st.write(food.info())
+def displayData(dataName, df, nbDatasetHead):
+    st.header(dataName)
+    st.subheader('Dataset')
+    st.write(df.head(int(nbDatasetHead))) #or st.table
+    col1, col2, col3 = st.beta_columns(3)
+    with col1:
+        st.subheader('Columns')
+        st.write(df.columns)
+    with col2:
+        st.subheader('Columns types')
+        st.write(df.dtypes)
+    with col3:
+        st.subheader('Describe')
+        st.write(df.describe())
+    st.subheader('Shape')
+    st.write(df.shape)
+    st.subheader('Info')
+    st.write(df.info())
+
+if option == foodName:
+    displayData(foodName, food, user_input)
+else:
+    displayData(indianFoodName, indianFood, user_input)
+
 
